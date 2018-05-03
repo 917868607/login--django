@@ -1,0 +1,23 @@
+{% extends 'login.html' %}
+{% block header %}
+    <title>修改密码</title>
+{% endblock %}
+
+{% block title %}
+    <form class="form-signin" method="post" action="{% url 'amend_pd' %}">
+        {% csrf_token %}
+        <h4 class="form-signin-heading text-center">请填写邮箱地址</h4>
+        <label for="inputEmail" class="sr-only">邮箱地址</label>
+        <input name="email" type="text" id="inputEmail" class="form-control" placeholder="邮箱地址" required
+               value="{% if form.email.value %}{{ form.email.value }}{% endif %}">
+        {{ form.email.errors }}
+        {{ form.captcha }}
+        {{ form.captcha.errors }}
+        {% if error %}
+            <h3>{{ error }}</h3>
+        {% endif %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+    </form>
+{% endblock %}
+{% block login %}
+{% endblock %}

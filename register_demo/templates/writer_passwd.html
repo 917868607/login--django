@@ -1,0 +1,27 @@
+{% extends 'login.html' %}
+{% block header %}
+    <title>修改密码</title>
+{% endblock %}
+{% block title %}
+    <form class="form-signin" method="post" action="{% url 'alterpasswd' %}">
+        {% csrf_token %}
+        <h4 class="form-signin-heading text-center">修改密码</h4>
+        <h4 class="form-signin-heading text-center">账户：{% if form.email.value %}{{ form.email.value }}{% else %}{{ email }}{% endif %}</h4>
+        <input name="email" type="hidden" id="email" class="form-control" placeholder="邮箱" required
+               value="{% if form.email.value %}{{ form.email.value }}{% else %}{{ email }}{% endif %}">
+
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="密码" required
+               value="{% if form.password.value %}{{ form.password.value }}{% endif %}">
+        {{ form.password.errors }}
+        <label for="reinputPassword" class="sr-only">确认密码</label>
+        <input name="repassword" type="password" id="reinputPassword" class="form-control" placeholder="确认密码" required
+               value="{% if form.repassword.value %}{{ form.repassword.value }}{% endif %}">
+        {% if error %}
+            <h3>{{ error }}</h3>
+        {% endif %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+    </form>
+{% endblock %}
+{% block login %}
+{% endblock %}
