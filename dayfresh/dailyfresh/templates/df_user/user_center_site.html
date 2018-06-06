@@ -1,0 +1,37 @@
+{% extends 'df_user/base_user.html' %}
+{% block right_content %}
+<div class="right_content clearfix">
+    <h3 class="common_title2">收货地址</h3>
+    <div class="site_con">
+        <dl>
+            <dt>当前地址：</dt>
+            <dd>河南郑州 （张三 收） 110</dd>
+        </dl>
+    </div>
+    <h3 class="common_title2">编辑地址</h3>
+    <div class="site_con">
+        <form action="/user/site/" method="post">
+            {% csrf_token %}
+            <div class="form_group">
+                <label>收件人：</label>
+                <input type="text" name="username" value="{{ user.u_name }}">
+            </div>
+            <div class="form_group form_group2">
+                <label>详细地址：</label>
+                <textarea class="site_area" name="address">河南省郑州市河南通信产业园</textarea>
+            </div>
+            <div class="form_group">
+                <label>邮编：</label>
+                <input type="text" name="postcode" value="400000">
+            </div>
+            <div class="form_group">
+                <label>手机：</label>
+                <input type="text" name="phone" value="1000000">
+            </div>
+
+            <input type="submit" name="" value="提交" class="info_submit">
+        </form>
+    </div>
+    </div>
+</div>
+{% endblock %}

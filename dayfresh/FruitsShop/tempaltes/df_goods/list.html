@@ -1,0 +1,49 @@
+{% extends 'df_goods/base_goods.html' %}
+{% load staticfiles %}
+{% block head %}
+    <script src="{% static 'js/list.js' %}">
+
+    </script>
+{% endblock %}
+{% block list %}
+    <div class="main_wrap clearfix">
+    <div class="l_wrap fl clearfix">
+    </div>
+    <div class="r_wrap fr clearfix">
+        <div class="sort_bar">
+            <a href="{% url 'list' %}?type_id={{ page.object_list.0.type_id }}" {% if type == 'default'%}class="active"{% endif %}>默认</a>
+            <a href="{% url 'list' %}?type_id={{ page.object_list.0.type_id }}&type=price" {% if type == 'price'%}class="active"{% endif %}>价格</a>
+            <a href="{% url 'list' %}?type_id={{ page.object_list.0.type_id }}&type=hot" {% if type == 'hot'%}class="active"{% endif %}>人气</a>
+        </div>
+
+        <ul class="goods_type_list clearfix">
+            {% for p in page.object_list %}
+                <li>
+                    <a href="{% url 'detail' %}?com_id={{ p.id }}"><img src="{% url 'media' p.c_images %}"></a>
+                    <h4><a href="{% url 'detail' %}?com_id={{ p.id }}">{{ p.c_name }}</a></h4>
+                    <div class="operate">
+                        <span class="prize">￥{{ p.c_price }}</span>
+                        <span class="unit">{{ p.c_unit }}</span>
+                        <a  class="add_goods" title="加入购物车" id="9"></a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="pagenation">
+        {% if page.has_previous %}
+            <a href="{% url 'list' %}?type_id={{ page.object_list.0.type_id }}&p={{ page.previous_page_number }}&type={{ type }}">上一页</a>
+            {% else %}
+            <a >上一页</a>
+        {% endif %}
+            {% for p in page.paginator.page_range %}
+                <a href="{% url 'list' %}?type_id={{ page.object_list.0.type_id }}&p={{ p }}&type={{ type }}" class="{% if page.number == p %}active{% endif %}">{{ p }}</a>
+            {% endfor %}
+        {% if page.has_next %}
+            <a href="{% url 'list' %}?type_id={{ page.object_list.0.type_id }}&p={{ page.next_page_number }}&type={{ type }}">下一页</a>
+            {% else %}
+            <a >下一页</a>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}
+</div>>

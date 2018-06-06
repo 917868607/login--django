@@ -1,0 +1,78 @@
+{% extends 'base_head.html' %}
+{% load mytags %}
+{% block head %}
+<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/js/slide.js"></script>
+{% endblock %}
+{% block body %}
+
+<div class="navbar_con">
+		<div class="navbar">
+			<h1 class="fl">全部商品分类</h1>
+			<ul class="navlist fl">
+				<li><a href="">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="center_con clearfix">
+		<ul class="subnav fl">
+            {% for type in types %}
+			<li><a href="#" class="{{ type.class_name }}">{{ type.title }}</a></li>
+			{% endfor %}
+		</ul>
+		<div class="slide fl">
+			<ul class="slide_pics">
+				<li><img src="/static/images/slide.jpg" alt="幻灯片"></li>
+				<li><img src="/static/images/slide02.jpg" alt="幻灯片"></li>
+				<li><img src="/static/images/slide03.jpg" alt="幻灯片"></li>
+				<li><img src="/static/images/slide04.jpg" alt="幻灯片"></li>
+			</ul>
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+		</div>
+		<div class="adv fl">
+			<a href="#"><img src="/static/images/adv01.jpg"></a>
+			<a href="#"><img src="/static/images/adv02.jpg"></a>
+		</div>
+	</div>
+    {% for k,good in goods.items %}
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model01">{{ k }}</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+                    {#  根据上面的key,取出hot_goods对应的列表 #}
+                    {# 自定义过滤器 #}
+                    {% for g in hot_goods|key:k %}
+                    <a href="{% url 'goods_detail' %}?g_id={{ g.id }}">{{ g.g_title }}</a>
+                    {% endfor %}
+
+			</div>
+			<a href="{% url 'goods_list' %}?t_id={{ good.0.type.id }}" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="{% url 'media'  good.0.type.type_img %}"></div>
+			<ul class="goods_list fl">
+                    {% for g in good %}
+                    <li>
+                        <h4><a href="{% url 'goods_detail' %}?g_id={{ g.id }}">{{ g.g_title }}</a></h4>
+                        <a href="{% url 'goods_detail' %}?g_id={{ g.id }}"><img src="{% url 'media' g.g_pic %}"></a>
+                        <div class="prize">¥ {{ g.g_price }}</div>
+                    </li>
+                    {% endfor %}
+
+			</ul>
+		</div>
+	</div>
+    {% endfor %}
+
+
+
+{% endblock %}

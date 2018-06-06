@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单号</title>
+</head>
+<body>
+    {% for order in orders %}
+    <a href="{% url 'order' %}?o_id={{ order.o_id }}">订单号:{{ order.o_id }}订单状态:{{ order.o_type }}</a><br>
+    {% endfor %}
+</body>
+</html>

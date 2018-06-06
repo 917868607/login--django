@@ -1,0 +1,71 @@
+{% extends 'base_head.html' %}
+{% load static %}
+{% block head %}
+<script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/slide.js' %}"></script>
+{% endblock %}
+{% block body %}
+
+<div class="navbar_con">
+		<div class="navbar">
+			<h1 class="fl">全部商品分类</h1>
+			<ul class="navlist fl">
+				<li><a href="#">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="#">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="center_con clearfix">
+		<ul class="subnav fl">
+            {% for key,type in types.items %}
+			<li><a href="{% url 'list' %}?type_id={{ type.id }}" class="{{ key }}">{{ type.class_name }}</a></li>
+            {% endfor %}
+		</ul>
+		<div class="slide fl">
+			<ul class="slide_pics">
+				<li><img src="{% static 'images/slide.jpg' %}" alt="幻灯片"></li>
+				<li><img src="{% static 'images/slide02.jpg' %}" alt="幻灯片"></li>
+				<li><img src="{% static 'images/slide03.jpg' %}" alt="幻灯片"></li>
+				<li><img src="{% static 'images/slide04.jpg' %}" alt="幻灯片"></li>
+			</ul>
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+		</div>
+		<div class="adv fl">
+			<a href="#"><img src="{% static 'images/adv01.jpg' %}"></a>
+			<a href="#"><img src="{% static 'images/adv02.jpg' %}"></a>
+		</div>
+	</div>
+    {% for key,value in goods.items %}
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model01">{{ key}}</h3>
+            {% for comm in value %}
+			<div class="subtitle fl">
+				<span>|</span>
+                    <a href="{% url 'detail' %}?com_id={{ comm.id }}">{{comm.c_name }}</a>
+			</div>
+            {% endfor %}
+			<a href="{% url 'list' %}?type_id={{ value.0.type_id }}" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="{% url 'media' value.0.type.type_img %}"></div>
+			<ul class="goods_list fl">
+                {% for comm in value %}
+                    <li>
+                        <h4><a href="/goods/2/">{{ comm.c_name }}</a></h4>
+                        <a href="{% url 'detail' %}?com_id={{ comm.id }}"><img src="{% url 'media' comm.c_images %}"></a>
+                        <div class="prize">¥ {{ comm.c_price }}</div>
+                    </li>
+                {% endfor %}
+			</ul>
+		</div>
+	</div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'df_goods/base_goods.html' %}
+{% load staticfiles %}
+{% block head %}
+    <script src="{% static 'js/detail.js' %}">
+    $(function () {
+
+    })
+
+    </script>
+{% endblock %}
+{% block detail %}
+<div class="goods_detail_con clearfix">
+    <div class="goods_detail_pic fl"><img src="{% url 'media' com.c_images %}"></div>
+
+    <div class="goods_detail_list fr">
+        {% for tag in tags %}
+        <h3>{{ tag.tags }}</h3>
+        {% endfor %}
+        <p>{{ com.c_desc }}</p>
+        <div class="prize_bar">
+            <span class="show_pirze">¥<em id="price">{{ com.c_price }}</em></span>
+            <span class="show_unit">单  位：{{ com.c_unit }}</span>
+            <span class="show_unit">库  存：<span id="stock">{{ com.c_stock }}</span></span>
+        </div>
+        <div class="goods_num clearfix">
+            <div class="num_name fl">数 量：1</div>
+            <div class="num_add fl">
+                <input type="text" class="num_show fl" value="1">
+                <a href="javascript:add();" class="add fr" >+</a>
+                <a href="javascript:minus();" class="minus fr">-</a>
+            </div>
+        </div>
+        <div class="total">总价：<em>{{ com.c_price }}</em>元</div>
+        <p id="csrf_token" hidden>{{ csrf_token }}</p>
+        <div class="operate_btn" id="{{ com.id }}">
+            <a href="javascript:;" class="buy_btn">立即购买</a>
+            <a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>
+        </div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block list %}
+<div class="r_wrap fr clearfix">
+    <ul class="detail_tab clearfix">
+        <li class="active">商品介绍</li>
+        <li>评论</li>
+    </ul>
+
+    <div class="tab_content">
+        <dl>
+            <dt>商品详情：</dt>
+            {% autoescape off%}
+            <dd>{{ com.c_content }}</dd>
+            {% endautoescape %}
+        </dl>
+    </div>
+
+</div>
+{% endblock %}
+
+

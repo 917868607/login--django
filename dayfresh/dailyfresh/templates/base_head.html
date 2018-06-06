@@ -1,0 +1,81 @@
+{% extends 'base_foot.html' %}
+
+{% block header %}
+<div class="header_con">
+    <div class="header">
+        <div class="welcome fl">欢迎来到天天生鲜!</div>
+        <div class="fr">
+            {% if request.user.is_authenticated %}
+            <div class="user_link fl">
+                <a href="/user/info">
+                    欢迎您：<em>{{ request.user.username }}</em>
+                </a>
+                <a href="{% url 'logout' %}">退出</a>
+                <span>|</span>
+                <a href="/user/info/">用户中心</a>
+                <span>|</span>
+                <a href="{% url 'cart_idx' %}">我的购物车</a>
+                <span>|</span>
+                <a href="/user/order/1/">我的订单</a>
+            </div>
+            {% else %}
+            <div class="login_btn fl">
+                <a href="{% url 'login' %}">登录</a>
+                <span>|</span>
+                <a href="{% url 'register' %}">注册</a>
+            </div>
+            <div class="user_link fl">
+                <span>|</span>
+                <a href="user_center_info.html">用户中心</a>
+                <span>|</span>
+                <a href="{% url 'cart_idx' %}">我的购物车</a>
+                <span>|</span>
+                <a href="/user/order/1/">我的订单</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="search_bar clearfix">
+    {% if type == "goods" %}
+        {# 如果后台传递的参数type是goods，说明进入的是商品页面 #}
+        <div class="search_bar clearfix">
+            <a href="/goods/" class="logo fl"><img src="/static/images/logo.png"></a>
+            <div class="search_con fl">
+                <input type="text" class="input_text fl" name="" placeholder="搜索商品">
+                <input type="button" class="input_btn fr" name="" value="搜索">
+            </div>
+            <div class="guest_cart fr">
+                <a href="/cart/" class="cart_name fl">我的购物车</a>
+                <div class="goods_count fl" id="show_count">{{ count }}</div>
+            </div>
+        </div>
+    {% elif type == "user" %}
+        <a href="/goods/" class="logo fl"><img src="/static/images/logo.png"></a>
+        {# 说明进入的是用户页面 #}
+        <div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+        <div class="search_con fr">
+            <input type="text" class="input_text fl" name="" placeholder="搜索商品">
+            <input type="button" class="input_btn fr" name="" value="搜索">
+        </div>
+    {% elif type == "cart" %}
+        <a href="/goods/" class="logo fl"><img src="/static/images/logo.png"></a>
+        {# 说明进入的是购物车页面 #}
+        <div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;购物车</div>
+        <div class="search_con fr">
+            <input type="text" class="input_text fl" name="" placeholder="搜索商品">
+            <input type="button" class="input_btn fr" name="" value="搜索">
+        </div>
+    {% endif %}
+</div>
+    <script>
+        $.get('/cart/query_count/',function (data) {
+            if(data.status){
+                $('#show_count').text(data.count)
+            }
+        })
+    </script>
+{% endblock %}
+
+
+
